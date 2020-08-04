@@ -1,3 +1,4 @@
+using Fluxor;
 using FluxorGap.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +23,9 @@ namespace FluxorGap
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddFluxor(options => options.ScanAssemblies(typeof(Startup).Assembly));
+
             services.AddSingleton<WeatherForecastService>();
         }
 
