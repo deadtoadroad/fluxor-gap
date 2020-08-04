@@ -26,6 +26,7 @@ namespace FluxorGap
 
             services.AddFluxor(options => options.ScanAssemblies(typeof(Startup).Assembly));
 
+            services.AddSingleton<CustomerService>();
             services.AddSingleton<WeatherForecastService>();
         }
 

@@ -1,0 +1,51 @@
+@page "/customers/{id:int}"
+@using Fluxor
+@using FluxorGap.Data
+@using FluxorGap.Store.EditCustomer
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@if (State.Value.IsLoading) {
+    <p><em>Loading...</em></p>
+}
+else if (Customer != null) {
+    <p>Customer form here</p>
+}
+else {
+    <p style="color: red;"><strong>THIS SHOULD NEVER SHOW</strong></p>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    private IState<State> State { get; set; }
+
+    [Inject]
+    private IDispatcher Dispatcher { get; set; }
+
+    private Customer Customer { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        State.StateChanged += StateOnStateChanged;
+
+        Dispatcher.Dispatch(new GetCustomerAction(Id));
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+            State.StateChanged -= StateOnStateChanged;
+        
+        base.Dispose(disposing);
+    }
+
+    private void StateOnStateChanged(object sender, State state)
+    {
+        Customer = state.Customer?.Clone();
+        StateHasChanged();
+    }
+}
