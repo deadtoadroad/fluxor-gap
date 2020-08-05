@@ -30,22 +30,12 @@ else {
     {
         base.OnInitialized();
 
-        State.StateChanged += StateOnStateChanged;
-
         Dispatcher.Dispatch(new GetCustomerAction(Id));
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void OnStateChanged(IState state)
     {
-        if (disposing)
-            State.StateChanged -= StateOnStateChanged;
-        
-        base.Dispose(disposing);
-    }
-
-    private void StateOnStateChanged(object sender, State state)
-    {
-        Customer = state.Customer?.Clone();
-        StateHasChanged();
+        if (state is IState<State> s)
+            Customer = s.Value.Customer?.Clone();
     }
 }

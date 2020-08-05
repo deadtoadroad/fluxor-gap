@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluxor.Blazor.Web" Version="3.2.0" />
+    <ProjectReference Include="..\..\..\..\mrpmorris\Fluxor\Source\Fluxor.Blazor.Web\Fluxor.Blazor.Web.csproj" />
   </ItemGroup>
 
 </Project>
